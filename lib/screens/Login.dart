@@ -1,6 +1,15 @@
+import 'package:HiroDeli/models/jwtoken.dart';
+import 'package:HiroDeli/screens/TestJwtPage.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart'
+    as http; // Http client package for request and response
+import 'package:flutter_secure_storage/flutter_secure_storage.dart'; // Persistent storage for JWToken
+
+final storage =
+    FlutterSecureStorage(); // Flutter secure storage instance for persistent storage
 
 class Login extends StatefulWidget {
+  // Create a stateful widget that can be changed
   @override
   _LoginState createState() => _LoginState();
 }
@@ -9,14 +18,50 @@ class _LoginState extends State<Login> {
   bool _obscuredText =
       true; // hide text in form field for password // Variable for password
   void _toggle() {
+    // Function toggle hide and show password
     setState(() {
       _obscuredText = !_obscuredText;
     });
   }
 
-  TextEditingController emailController =
-      new TextEditingController(); // Handle changes in textfield and callback logIn function
-  TextEditingController passwordController = new TextEditingController();
+  @override
+  void initState() {
+    // Initialize state when creating the widget
+    super.initState();
+  }
+
+  void displayDialog(context, title, text) => showDialog(
+        // Function for display dialog error widget when token is null
+        context: context,
+        builder: (context) =>
+            AlertDialog(title: Text(title), content: Text(text)),
+      );
+
+  JwToken token; // JwToken instance to store token
+
+  Future<JwToken> loginUser(String email, String password) async {
+    // Future for loginUser return a specified value
+    var res = await http.post(
+        'https://jwt-test-login.herokuapp.com/api/token/', // POST request to retrieve token by sending email and password at body of the request
+        body: {
+          "email": email,
+          "password": password,
+        });
+    print(res.body);
+    if (res.statusCode == 200) {
+      // Check if response status code is 200 (Ok) return response body data
+      final String responseString = res.body; // Response token string
+      return jwTokenFromJson(
+          responseString); // Return parse json into JwToken instance
+    } else {
+      return null;
+    }
+  }
+
+  final TextEditingController emailController =
+      new TextEditingController(); // Handle email input textfield
+  final TextEditingController passwordController =
+      new TextEditingController(); // Handle password input textfield
 
   @override
   Widget build(BuildContext context) {
@@ -136,8 +181,32 @@ class _LoginState extends State<Login> {
                 child: FlatButton(
                   color: Colors.lightBlue,
                   padding: EdgeInsets.all(18),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/location');
+                  onPressed: () async {
+                    var email = emailController
+                        .text; // retrive email value that user input inside textfield
+                    var password = passwordController
+                        .text; // retrive password value that user input inside textfield
+                    final JwToken jwtoken = await loginUser(email, password); // Call Future loginUser to retrieve JwToken model
+
+                    setState(() {
+                      token = jwtoken;
+                    });
+
+                    if (jwtoken != null) {
+                      // Check if user has jwtoken model or not from response body
+                      storage.write(
+                          key: 'jwt',
+                          value:
+                              token.access); // Store jwtoken into persistent storage key named jwt
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TestJwtPage.fromBase64(token.access)));
+                    } else {
+                      // If token is null then display dialog error
+                      displayDialog(context, "An Error Occurred",
+                          "No account was found matching that username and password");
+                    }
                   },
                   shape:
                       RoundedRectangleBorder(borderRadius: BorderRadius.zero),

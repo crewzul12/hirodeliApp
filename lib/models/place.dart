@@ -1,4 +1,4 @@
-import 'package:HiroDeli/models/geometry.dart';
+import 'package:HiroDeli/models/geometry.dart'; // import Geometry data model
 
 // Place object model
 class Place {
@@ -8,7 +8,7 @@ class Place {
 
   Place({this.name, this.vicinity, this.geometry}); // Constructor
 
-  Place.fromJson(Map<dynamic,dynamic> parsedJson) // Parse Json into Map with dynamic key and value type (Put all data from Json into new instance which is Map type)
+  Place.fromJson(Map<dynamic,dynamic> parsedJson) // Constructing a new Place instance from a Map structure
     :name = parsedJson['name'], // initialize key named "name" from parsedJson type Map<dynamic, dynamic>
     vicinity = parsedJson['vicinity'], // initialize key named "vicinity" from parsedJson type Map<dynamic, dynamic>
     geometry = Geometry.fromJson(parsedJson['geometry']); // Parse Json into parsedJson Map with key named "geometry" and put all data from Json into a new instance which is Map type, after that initialize into geometry)

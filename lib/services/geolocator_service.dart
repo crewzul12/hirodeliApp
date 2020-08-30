@@ -1,4 +1,4 @@
-import 'package:geolocator/geolocator.dart';
+import 'package:geolocator/geolocator.dart'; // import Geolocator data model
 
 class GeoLocatorService {
   final geolocator = Geolocator(); // create instance of Geolocator from geolocator.dart
@@ -11,6 +11,6 @@ class GeoLocatorService {
   }
 
   Future<double> getDistance(double startLatitude, double startLongitude, double endLatitude, double endLongitude) async { // Calculate distance from user device to destination
-    return await geolocator.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude); // return Future value as which is distance between current location and place as double
+    return await geolocator.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude); // return Future value which is distance between current location and place as double
   }
 }

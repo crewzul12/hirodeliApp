@@ -1,4 +1,4 @@
-import 'package:HiroDeli/models/place.dart';
+import 'package:HiroDeli/models/place.dart'; // import Place data model
 import 'package:http/http.dart' as http; // Package to use all http methods such as get and post method
 import 'dart:convert' as convert; // Package to use jsonDecode
 
@@ -13,7 +13,7 @@ class PlacesService {
   Future<List<Place>> getPlaces(double lat, double lng) async {
     var response = await http.get(
         'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$lat,$lng&type=restaurant&rankby=distance&key=$key&pagetoken=$pageToken'); // Get request from google places API by specify output and parameters
-    var json = convert.jsonDecode(response.body); // convert JSON object from body of response to Dart object, so that we can use
+    var json = convert.jsonDecode(response.body); // convert JSON string from body of response to Json object, so that we can use
     var jsonResults = json['results'] as List; // initialize object from key named "results" that retrieve from google maps endpoint response in body as a List
     return jsonResults.map((place) => Place.fromJson(place)).toList(); // Return a List that contain list of places nearby from mapping jsonResults list
   }
