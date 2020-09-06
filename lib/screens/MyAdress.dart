@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:HiroDeli/models/address.dart';
+import 'package:HiroDeli/screens/AddAddress.dart'; // import Add address page
+import 'package:HiroDeli/models/address.dart'; // import address model
 
 class MyAdress extends StatefulWidget {
   @override
@@ -48,7 +49,10 @@ class _MyAdressState extends State<MyAdress> {
           Icons.add,
           size: 42,
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => AddAdress()));
+        },
       ),
       body: Container(
         child: ListView(
@@ -73,7 +77,7 @@ class _MyAdressState extends State<MyAdress> {
                               }),
                         ),
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.70,
+                          width: MediaQuery.of(context).size.width * 0.60,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,11 +103,11 @@ class _MyAdressState extends State<MyAdress> {
                             ],
                           ),
                         ),
-                        Container(
-                          margin: EdgeInsets.only(left: 7),
-                          child: IconButton(
-                              icon: Icon(Icons.edit), onPressed: () {}),
-                        ),
+                        SizedBox(width: 10.0),
+                        GestureDetector(onTap: () {}, child: Icon(Icons.edit)),
+                        SizedBox(width: 18.0),
+                        GestureDetector(
+                            onTap: () {}, child: Icon(Icons.delete)),
                       ],
                     ),
                     Container(

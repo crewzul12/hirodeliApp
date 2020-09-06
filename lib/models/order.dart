@@ -1,6 +1,7 @@
 class Order{
   String vendorName;
-  DateTime orderDateTime;
+  String tableNo;
+  String orderNo;
   String orderStatus;
-  Order({this.vendorName, this.orderDateTime, this.orderStatus});
+  Order({this.vendorName, this.tableNo, this.orderNo, this.orderStatus});
 }

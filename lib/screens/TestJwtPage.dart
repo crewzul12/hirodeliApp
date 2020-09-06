@@ -6,7 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart'; // Persiste
 class TestJwtPage extends StatelessWidget {
   TestJwtPage(
       this.jwt, this.payload); // Receive jwt from FutureBuilder snapshot.data
-
+  
   factory TestJwtPage.fromBase64(String jwt) => TestJwtPage(
       jwt,
       json.decode(ascii.decode(base64.decode(base64.normalize(jwt.split(".")[
@@ -19,7 +19,8 @@ class TestJwtPage extends StatelessWidget {
   // If no padding exists, add correct padding if necessary and possible.
   // Validate that the length is correct (a multiple of four).
   final String jwt; // Jwt access token
-  final Map<String, dynamic> payload; // JWT payload from response body into Map structure
+  final Map<String, dynamic>
+      payload; // JWT payload from response body into Map structure
   final storage =
       FlutterSecureStorage(); // Flutter secure storage instance for persistent storage
   @override
@@ -30,9 +31,30 @@ class TestJwtPage extends StatelessWidget {
           children: <Widget>[
             Text(jwt),
             Text(payload['token_type'].toString()), // Display token type
-            Text(payload['exp'].toString()), // Display expiration time and date in Epoch unit time
+            Text(payload['exp']
+                .toString()), // Display expiration time and date in Epoch unit time
             Text(payload['jti'].toString()),
             Text(payload['user_id'].toString()), // Display user id
+            RaisedButton(
+              onPressed: () {
+              
+              },
+              textColor: Colors.white,
+              padding: const EdgeInsets.all(0.0),
+              child: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: <Color>[
+                      Color(0xFF0D47A1),
+                      Color(0xFF1976D2),
+                      Color(0xFF42A5F5),
+                    ],
+                  ),
+                ),
+                padding: const EdgeInsets.all(10.0),
+                child: const Text('PAY', style: TextStyle(fontSize: 20)),
+              ),
+            ),
             RaisedButton(
               onPressed: () async {
                 await storage.delete(

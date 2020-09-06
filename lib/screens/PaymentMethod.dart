@@ -308,8 +308,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                   ),
                 ],
               ),
-              Expanded(
-                child: Align(
+              Align(
                   alignment: FractionalOffset.bottomCenter,
                   child: FlatButton(
                     color: Color(0xddd60606),
@@ -331,7 +330,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                     ),
                   ),
                 ),
-              ),
+              
             ],
           )),
     );

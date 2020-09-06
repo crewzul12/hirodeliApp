@@ -1,3 +1,4 @@
+import 'package:HiroDeli/screens/SignupPhoneNum.dart';
 import 'package:flutter/material.dart';
 
 class Signup extends StatefulWidget {
@@ -6,20 +7,12 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
-  bool _obscuredPasswordText = true;
-  bool _obscuredConfirmPasswordText =
-      true; // hide text in form field for password // Variable for password
-  void _togglePassword() {
-    setState(() {
-      _obscuredPasswordText = !_obscuredPasswordText;
-    });
-  }
+  final TextEditingController firstNameController =
+      new TextEditingController(); // Handle first name input field
+  final TextEditingController lastNameController =
+      new TextEditingController(); // Handle last name input field
 
-  void _toggleConfirmPassword() {
-    setState(() {
-      _obscuredConfirmPasswordText = !_obscuredConfirmPasswordText;
-    });
-  }
+  bool validateFirstName = false; // Validation for firstname input
 
   @override
   Widget build(BuildContext context) {
@@ -42,29 +35,47 @@ class _SignupState extends State<Signup> {
               child: Column(
                 children: <Widget>[
                   Container(
+                    margin: EdgeInsets.only(bottom: 5),
                     child: Text(
-                      'Sign Up',
+                      "Hello, welcome to HiroDeli",
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 24,
+                        fontSize: 20,
                         fontFamily: 'Poppins',
                         fontWeight: FontWeight.w600,
                       ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Container(
+                    child: Text(
+                      "What should we call you?",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w600,
+                      ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                   Container(
                     margin: EdgeInsets.only(top: 20),
                     width: MediaQuery.of(context).size.width * 0.88,
                     child: TextFormField(
-                      keyboardType: TextInputType.emailAddress,
+                      controller: firstNameController,
+                      keyboardType: TextInputType.name,
                       decoration: InputDecoration(
-                        hintText: 'Enter your email',
-                        labelText: 'Email',
+                        hintText: 'Enter your first name',
+                        labelText: 'First name',
                         labelStyle: TextStyle(
                           color: Colors.black,
                           fontSize: 15,
                           fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w500,
                         ),
+                        errorText:
+                            validateFirstName ? "Form can't be empty" : null,
                       ),
                       validator: (value) {
                         if (value.isEmpty) {
@@ -75,71 +86,21 @@ class _SignupState extends State<Signup> {
                     ),
                   ),
                   Container(
-                    margin: EdgeInsets.all(10),
+                    margin: EdgeInsets.only(top: 20),
                     width: MediaQuery.of(context).size.width * 0.88,
                     child: TextFormField(
-                      keyboardType: TextInputType.text,
+                      controller: lastNameController,
+                      keyboardType: TextInputType.name,
                       decoration: InputDecoration(
-                        hintText: 'Enter your password',
-                        labelText: 'Password',
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            _obscuredPasswordText
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                          ),
-                          onPressed: _togglePassword,
-                          color: Colors.grey,
-                        ),
+                        hintText: 'Enter your last name',
+                        labelText: 'Last name',
                         labelStyle: TextStyle(
                           color: Colors.black,
                           fontSize: 15,
                           fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please enter some text';
-                        } else if (value.length < 6) {
-                          return 'Password too short';
-                        }
-                        return null;
-                      },
-                      obscureText: _obscuredPasswordText,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.all(10),
-                    width: MediaQuery.of(context).size.width * 0.88,
-                    child: TextFormField(
-                      keyboardType: TextInputType.text,
-                      decoration: InputDecoration(
-                        hintText: 'Enter your password',
-                        labelText: 'Confirm Password',
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            _obscuredConfirmPasswordText
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                          ),
-                          onPressed: _toggleConfirmPassword,
-                          color: Colors.grey,
-                        ),
-                        labelStyle: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15,
-                          fontFamily: 'Poppins',
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Please enter some text';
-                        } else if (value.length < 6) {
-                          return 'Password too short';
-                        }
-                        return null;
-                      },
-                      obscureText: _obscuredConfirmPasswordText,
                     ),
                   ),
                 ],
@@ -152,10 +113,22 @@ class _SignupState extends State<Signup> {
                   color: Color(0xddd60606),
                   padding: EdgeInsets.all(18),
                   onPressed: () {
-                    Navigator.of(context).pushNamed('/signupName');
+                    if (firstNameController.text.isEmpty) {
+                      setState(() {
+                        validateFirstName = true;
+                      });
+                    } else {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => SignupPhoneNum(
+                                firstNameController.text,
+                                lastNameController.text),
+                          ));
+                    }
                   },
                   shape:
-                        RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                      RoundedRectangleBorder(borderRadius: BorderRadius.zero),
                   child: SizedBox(
                     width: double.maxFinite,
                     child: Text(

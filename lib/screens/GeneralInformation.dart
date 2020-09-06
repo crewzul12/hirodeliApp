@@ -147,7 +147,7 @@ class _GeneralInformationState extends State<GeneralInformation> {
                               border: InputBorder.none,
                               filled: true,
                               fillColor: Colors.blueGrey[50],
-                              hintText: 'e.g. manza_',
+                              hintText: 'example@email.com',
                             ),
                           ),
                         ),
@@ -176,7 +176,7 @@ class _GeneralInformationState extends State<GeneralInformation> {
                               border: InputBorder.none,
                               filled: true,
                               fillColor: Colors.blueGrey[50],
-                              hintText: 'e.g. manza_',
+                              hintText: 'e.g. 01123723726',
                             ),
                           ),
                         ),
@@ -194,7 +194,7 @@ class _GeneralInformationState extends State<GeneralInformation> {
                   padding: EdgeInsets.all(18),
                   onPressed: () {},
                   shape:
-                        RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                      RoundedRectangleBorder(borderRadius: BorderRadius.zero),
                   child: SizedBox(
                     width: double.maxFinite,
                     child: Text(

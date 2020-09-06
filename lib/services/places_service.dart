@@ -12,7 +12,7 @@ class PlacesService {
   // Future that return list of places based on latitude and longitude
   Future<List<Place>> getPlaces(double lat, double lng) async {
     var response = await http.get(
-        'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$lat,$lng&type=restaurant&rankby=distance&key=$key&pagetoken=$pageToken'); // Get request from google places API by specify output and parameters
+        'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=$lat,$lng&type=restaurant&rankby=distance&key=$key'); // Get request from google places API by specify output and parameters
     var json = convert.jsonDecode(response.body); // convert JSON string from body of response to Json object, so that we can use
     var jsonResults = json['results'] as List; // initialize object from key named "results" that retrieve from google maps endpoint response in body as a List
     return jsonResults.map((place) => Place.fromJson(place)).toList(); // Return a List that contain list of places nearby from mapping jsonResults list

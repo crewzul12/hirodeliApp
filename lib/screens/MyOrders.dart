@@ -12,32 +12,14 @@ class _MyOrdersState extends State<MyOrders> {
   List<Order> order = [
     Order(
         vendorName: 'Nasi Kandar Haji Tapah',
-        orderDateTime: DateTime.parse('2020-03-17 13:00'),
-        orderStatus: 'Reorder'),
+        orderNo: 'HD001',
+        tableNo: 'T12',
+        orderStatus: 'Preparing'),
     Order(
         vendorName: 'Nasi Kandar Haji Tapah',
-        orderDateTime: DateTime.parse('2020-03-17 13:00'),
-        orderStatus: 'Delivering...'),
-    Order(
-        vendorName: 'Nasi Kandar Haji Tapah',
-        orderDateTime: DateTime.parse('2020-03-17 13:00'),
-        orderStatus: 'Pending'),
-    Order(
-        vendorName: 'Nasi Kandar Haji Tapah',
-        orderDateTime: DateTime.parse('2020-03-17 13:00'),
-        orderStatus: 'Cancelled'),
-    Order(
-        vendorName: 'Nasi Kandar Haji Tapah',
-        orderDateTime: DateTime.parse('2020-03-17 13:00'),
-        orderStatus: 'Refunded'),
-    Order(
-        vendorName: 'Nasi Kandar Haji Tapah',
-        orderDateTime: DateTime.parse('2020-03-17 13:00'),
-        orderStatus: 'Rejected'),
-    Order(
-        vendorName: 'Nasi Kandar Haji Tapah',
-        orderDateTime: DateTime.parse('2020-03-17 13:00'),
-        orderStatus: 'Rejected'),
+        orderNo: 'HD001',
+        tableNo: null,
+        orderStatus: 'Ready'),
   ];
   @override
   Widget build(BuildContext context) {
@@ -62,6 +44,11 @@ class _MyOrdersState extends State<MyOrders> {
               return Container(
                 margin: EdgeInsets.only(top: 8, right: 10, left: 10),
                 child: Card(
+                  color: ord.orderStatus == 'Preparing'
+                      ? null
+                      : ord.orderStatus == 'Ready'
+                          ? Color(0xddd60606)
+                          : null,
                   elevation: 4,
                   shadowColor: Colors.teal[50],
                   child: InkWell(
@@ -69,8 +56,9 @@ class _MyOrdersState extends State<MyOrders> {
                     onTap: () {},
                     child: Container(
                       margin: EdgeInsets.only(top: 15, bottom: 15),
+                      padding: EdgeInsets.only(left: 15, right: 15),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Column(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -82,71 +70,61 @@ class _MyOrdersState extends State<MyOrders> {
                                   '${ord.vendorName}',
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
+                                      color: ord.orderStatus == 'Preparing'
+                                          ? null
+                                          : ord.orderStatus == 'Ready'
+                                              ? Colors.white
+                                              : null,
+                                      fontSize: 14,
                                       fontFamily: 'Poppins',
                                       fontWeight: FontWeight.w500),
                                 ),
                               ),
-                              Text(
-                                '${dateFormat.format(ord.orderDateTime)}',
-                                style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 15,
-                                    fontFamily: 'Poppins',
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ],
-                          ),
-                          ord.orderStatus == 'Reorder'
-                              ? Container(
-                                  width: 92,
-                                  height: 30,
-                                  child: FlatButton(
-                                      onPressed: () {},
-                                      color: Colors.lightBlue,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Text(
-                                        '${ord.orderStatus}',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 15,
-                                            fontFamily: 'Poppins',
-                                            fontWeight: FontWeight.w500),
-                                      )),
-                                )
-                              : ord.orderStatus == 'Delivering...' ||
-                                      ord.orderStatus == 'Pending'
-                                  ? Text(
-                                      '${ord.orderStatus}',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 15,
-                                          fontFamily: 'Poppins',
-                                          fontWeight: FontWeight.w500),
-                                    )
-                                  : ord.orderStatus == 'Cancelled' ||
-                                          ord.orderStatus == 'Refunded'
+                              Row(
+                                children: [
+                                  Text(
+                                    '${ord.orderNo}',
+                                    style: TextStyle(
+                                        color: ord.orderStatus == 'Preparing'
+                                            ? null
+                                            : ord.orderStatus == 'Ready'
+                                                ? Colors.white
+                                                : null,
+                                        fontSize: 14,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                  ord.tableNo != null
                                       ? Text(
-                                          '${ord.orderStatus}',
+                                          ' | ${ord.tableNo}',
                                           style: TextStyle(
-                                              color: Color(0xddd60606),
-                                              fontSize: 15,
+                                              color: ord.orderStatus ==
+                                                      'Preparing'
+                                                  ? null
+                                                  : ord.orderStatus == 'Ready'
+                                                      ? Colors.white
+                                                      : null,
+                                              fontSize: 14,
                                               fontFamily: 'Poppins',
                                               fontWeight: FontWeight.w500),
                                         )
-                                      : ord.orderStatus == 'Rejected'
-                                          ? Text(
-                                              '${ord.orderStatus}',
-                                              style: TextStyle(
-                                                  color: Color(0xddd60606),
-                                                  fontSize: 15,
-                                                  fontFamily: 'Poppins',
-                                                  fontWeight: FontWeight.w500),
-                                            )
-                                          : null
+                                      : Container()
+                                ],
+                              ),
+                            ],
+                          ),
+                          Text(
+                            '${ord.orderStatus}',
+                            style: TextStyle(
+                                color: ord.orderStatus == 'Preparing'
+                                    ? null
+                                    : ord.orderStatus == 'Ready'
+                                        ? Colors.white
+                                        : null,
+                                fontSize: 14,
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w500),
+                          ),
                         ],
                       ),
                     ),

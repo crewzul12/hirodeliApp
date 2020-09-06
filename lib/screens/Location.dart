@@ -16,7 +16,7 @@ class Location extends StatefulWidget {
 class _LocationState extends State<Location> {
   final locatorService =
       GeoLocatorService(); // create an instance of GeoLocatorService to use future getLocation() inside FutureProvider
-  final placesService = PlacesService();
+  final placesService = PlacesService(); // create an instance of PlacesService to use Future getPlaces() inside ProxyProvider
 
   @override
   Widget build(BuildContext context) {
