@@ -15,7 +15,6 @@ import 'package:HiroDeli/screens/Home.dart';
 import 'package:HiroDeli/screens/Settings.dart';
 import 'package:HiroDeli/screens/ReportIssue.dart';
 import 'package:HiroDeli/screens/QrCodeScanner.dart';
-import 'package:HiroDeli/screens/Location.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart'; // Persistent storage for JWToken
 import 'dart:convert'
     show json, base64, ascii; // Convert Json string into Json object
@@ -65,8 +64,6 @@ class MyApp extends StatelessWidget {
             ReportIssue(), // ReportIssue page route
         '/qrCodeScanner': (BuildContext context) =>
             QrCodeScanner(), // QrCodeScanner page route
-        '/location': (BuildContext context) =>
-            Location(), // Location page route
       },
       title: 'Authentication Demo',
       theme: ThemeData(

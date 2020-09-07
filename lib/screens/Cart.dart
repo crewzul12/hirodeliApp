@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class Cart extends StatefulWidget {
   @override
@@ -29,12 +30,15 @@ class _CartState extends State<Cart> {
       body: Container(
         margin: EdgeInsets.only(top: 200),
         child: Column(children: [
-          Icon(
-            Icons.shopping_cart,
-            size: 67,
+          Container(
+            child: SvgPicture.asset(
+              'assets/qr-code.svg',
+              width: 50,
+              height: 50,
+            ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 10, right: 100, left: 100),
+            margin: EdgeInsets.only(top: 15, right: 100, left: 100),
             child: Text(
               "It's empty. You have not added anything",
               textAlign: TextAlign.center,

@@ -66,33 +66,6 @@ class _ProfileState extends State<Profile> {
               child: InkWell(
                 splashColor: Colors.blue.withAlpha(30),
                 onTap: () {
-                  Navigator.of(context).pushNamed('/myAddress');
-                },
-                child: Container(
-                  padding: EdgeInsets.only(left: 16),
-                  alignment: Alignment.centerLeft,
-                  width: MediaQuery.of(context).size.width * 0.88,
-                  height: 67,
-                  child: Text(
-                    'My address',
-                    textAlign: TextAlign.left,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w500),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 5),
-            child: Card(
-              elevation: 9,
-              shadowColor: Colors.teal[50],
-              child: InkWell(
-                splashColor: Colors.blue.withAlpha(30),
-                onTap: () {
                   Navigator.of(context).pushNamed('/myOrders');
                 },
                 child: Container(

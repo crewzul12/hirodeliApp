@@ -67,8 +67,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                     ),
                     subtitle: ListTileTheme(
                       contentPadding: EdgeInsets.all(0),
-                      tileColor: Colors.white,
-                      selectedTileColor: Colors.white,
+                      selectedColor: Colors.white,
                       child: ExpansionTile(
                         tilePadding: EdgeInsets.all(0),
                         childrenPadding: EdgeInsets.all(0),
@@ -309,28 +308,27 @@ class _PaymentMethodState extends State<PaymentMethod> {
                 ],
               ),
               Align(
-                  alignment: FractionalOffset.bottomCenter,
-                  child: FlatButton(
-                    color: Color(0xddd60606),
-                    padding: EdgeInsets.all(18),
-                    shape:
-                        RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-                    onPressed: () {},
-                    child: SizedBox(
-                      width: double.maxFinite,
-                      child: Text(
-                        'UPDATE',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontFamily: 'Poppins',
-                        ),
+                alignment: FractionalOffset.bottomCenter,
+                child: FlatButton(
+                  color: Color(0xddd60606),
+                  padding: EdgeInsets.all(18),
+                  shape:
+                      RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                  onPressed: () {},
+                  child: SizedBox(
+                    width: double.maxFinite,
+                    child: Text(
+                      'UPDATE',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontFamily: 'Poppins',
                       ),
                     ),
                   ),
                 ),
-              
+              ),
             ],
           )),
     );

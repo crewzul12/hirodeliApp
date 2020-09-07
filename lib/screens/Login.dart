@@ -1,8 +1,7 @@
 import 'package:HiroDeli/models/jwtoken.dart';
 import 'package:HiroDeli/screens/MainPage.dart';
+import 'package:HiroDeli/services/login_service.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart'
-    as http; // Http client package for request and response
 import 'package:flutter_secure_storage/flutter_secure_storage.dart'; // Persistent storage for JWToken
 
 final storage =
@@ -30,6 +29,11 @@ class _LoginState extends State<Login> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   void displayDialog(context, title, text) => showDialog(
         // Function for display dialog error widget when token is null
         context: context,
@@ -37,29 +41,8 @@ class _LoginState extends State<Login> {
             AlertDialog(title: Text(title), content: Text(text)),
       );
 
-  JwToken token; // JwToken instance to store token
-
-  Future<JwToken> loginUser(String email, String password) async {
-    // Future for loginUser return a specified value
-    var res = await http.post(
-        'https://jwt-test-login.herokuapp.com/api/login/', // POST request to retrieve token by sending email and password at body of the request
-        headers: {
-          "X-Hiro-Deli-Api-Auth-X": "dUzhUW49.mzskx1G7fxnJTSgkVVtsgj4vpwcDf11v"
-        },
-        body: {
-          "email": email,
-          "password": password,
-        });
-    print(res.body);
-    if (res.statusCode == 200) {
-      // Check if response status code is 200 (Ok) return response body data
-      final String responseString = res.body; // Response token string
-      return jwTokenFromJson(
-          responseString); // Return parse json into JwToken instance
-    } else {
-      return null;
-    }
-  }
+  final loginService =
+      LoginService(); // Access Future loginUser method from LoginService() instance
 
   final TextEditingController emailController =
       new TextEditingController(); // Handle email input textfield
@@ -191,25 +174,22 @@ class _LoginState extends State<Login> {
                         .text; // retrive email value that user input inside textfield
                     var password = passwordController
                         .text; // retrive password value that user input inside textfield
-                    final JwToken jwtoken = await loginUser(email,
+                    final JwToken jwtoken = await loginService.loginUser(email,
                         password); // Call Future loginUser to retrieve JwToken model
-
-                    setState(() {
-                      token = jwtoken;
-                    });
 
                     if (jwtoken != null) {
                       // Check if user has jwtoken model or not from response body
                       storage.write(
                           key: 'jwt',
-                          value: token
+                          value: jwtoken
                               .access); // Store jwtoken into persistent storage key named jwt
 
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
                               builder: (context) =>
-                                  Mainpage.fromBase64(token.access)),
-                          (Route<dynamic> route) => false); // Remove all previous routes
+                                  Mainpage.fromBase64(jwtoken.access)),
+                          (Route<dynamic> route) =>
+                              false); // Remove all previous routes
                     } else {
                       // If token is null then display dialog error
                       displayDialog(context, "An Error Occurred",

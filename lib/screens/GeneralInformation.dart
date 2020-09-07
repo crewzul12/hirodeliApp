@@ -9,7 +9,6 @@ class _GeneralInformationState extends State<GeneralInformation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text(
           'General information',

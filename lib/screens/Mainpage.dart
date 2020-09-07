@@ -6,6 +6,7 @@ import 'package:HiroDeli/screens/Cart.dart';
 import 'package:HiroDeli/screens/SearchStore.dart';
 import 'package:geolocator/geolocator.dart'; // import Geolocator data model
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart'; // import spinnner kit package
 import 'package:provider/provider.dart';
 import 'package:HiroDeli/services/geolocator_service.dart';
 import 'package:HiroDeli/services/places_service.dart';
@@ -21,7 +22,6 @@ import 'package:HiroDeli/screens/PaymentMethod.dart';
 import 'package:HiroDeli/screens/Settings.dart';
 import 'package:HiroDeli/screens/ReportIssue.dart';
 import 'package:HiroDeli/screens/QrCodeScanner.dart';
-import 'package:HiroDeli/screens/Location.dart';
 import 'package:HiroDeli/models/address.dart';
 import 'package:HiroDeli/models/place.dart'; // import Place data model
 import 'dart:convert'
@@ -67,6 +67,7 @@ class _MainpageState extends State<Mainpage> {
               .getLocation(), // Create a FutureProvider to retrieve the value return by Future
         ),
         ProxyProvider<Position, Future<List<Place>>>(
+          // Provider that can pass Object that can be changed over time
           // Combine multiple values that return by multiple providers into a new object and send it back to Provider
           update: (context, position, places) {
             return (position !=
@@ -107,8 +108,6 @@ class _MainpageState extends State<Mainpage> {
               ReportIssue(), // ReportIssue page route
           '/qrCodeScanner': (BuildContext context) =>
               QrCodeScanner(), // QrCodeScanner page route
-          '/location': (BuildContext context) =>
-              Location(), // Location page route
         },
         home: SecondMainpage(),
       ),
@@ -147,7 +146,7 @@ class _SecondMainpageState extends State<SecondMainpage> {
     final currentPosition = Provider.of<Position>(
         context); // current position with latitude and longitude value from Position generic type that provide by Provider
     final placeProvider = Provider.of<Future<List<Place>>>(
-        context); // Retrieve Provider that provide all values from the type, so that it can be created by FutureProvider
+        context); // Retrieve places value from Provider Place
     final geoService =
         GeoLocatorService(); // Create instance of GeoLocatorService to use getDistance() method
     return searchActive
@@ -381,8 +380,6 @@ class _SecondMainpageState extends State<SecondMainpage> {
                     ReportIssue(), // ReportIssue page route
                 '/qrCodeScanner': (BuildContext context) =>
                     QrCodeScanner(), // QrCodeScanner page route
-                '/location': (BuildContext context) =>
-                    Location(), // Location page route
               },
               home: DefaultTabController(
                 length: 2,
@@ -621,11 +618,17 @@ class _SecondMainpageState extends State<SecondMainpage> {
                                     ],
                                   )
                                 : Center(
-                                    child: CircularProgressIndicator(),
+                                    child: SpinKitWave(
+                                      color: Color(0xddd60606),
+                                      size: 25,
+                                    ),
                                   );
                           })
                         : Center(
-                            child: CircularProgressIndicator(),
+                            child: SpinKitWave(
+                              color: Color(0xddd60606),
+                              size: 25,
+                            ),
                           ),
                     Center(
                       child: Column(
